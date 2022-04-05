@@ -2,7 +2,27 @@ import java.io.*;
 import java.util.Scanner;
 
 class Peaklass {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+
+        //KUI UUENDADA KLASSE VÕI INVENTARI FAILI, SIIS PEAB SELLE UUESTI TEGEMA
+        //Inventar inventar = loeInventarCSV("inventar.csv");
+
+        Inventar inventar = loeInventarTXT("file.txt");
+
+        Scanner triipkoodiLugeja = new Scanner(System.in);
+        while (true) {
+            System.out.println("Loe kood: ");
+            String input = triipkoodiLugeja.nextLine();
+
+            if (input.equals("")) {
+                salvestaObjektFaili(inventar, "file.txt");
+                return;
+            }
+
+            Triipkood kood = new Triipkood(input);
+            System.out.println(inventar.getTehnika(kood));
+        }
 
         /*KUI MÜNDA KLASSI MUUTA SIIS PEAB UUESTI JOOKSUTAMA VÄLJAKOMMENTEERITUD OSA!!!!!!!!!!!!!*/
 //        Inventar inventar = new Inventar("inventar.csv");
@@ -35,36 +55,60 @@ class Peaklass {
 //            e.printStackTrace();
 //        }
 
-/*file.txt-st input */
+        /*file.txt-st input */
+//        FileInputStream fileStream = null;
+//        try {
+//            fileStream = new FileInputStream("file.txt");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        // Creating an object input stream
+//        ObjectInputStream objStream = null;
+//        try {
+//            objStream = new ObjectInputStream(fileStream);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Using the readInt() method
+//        inventar = null;
+//        try {
+//            inventar = (Inventar) objStream.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    static Inventar loeInventarCSV(String failinimi) {
+        return new Inventar("inventar.csv");
+    }
+
+    static Inventar loeInventarTXT(String failinimi) throws IOException, ClassNotFoundException {
         FileInputStream fileStream = null;
-        try {
-            fileStream = new FileInputStream("file.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            fileStream = new FileInputStream(failinimi);
+
         // Creating an object input stream
         ObjectInputStream objStream = null;
-        try {
             objStream = new ObjectInputStream(fileStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        //Using the readInt() method
-        Inventar inventar = null;
-        try {
-            inventar = (Inventar) objStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Scanner triipkoodiLugeja = new Scanner(System.in);
-        while (true) {
-            System.out.println("Loe kood: ");
-            Triipkood kood = new Triipkood(triipkoodiLugeja.nextLine());
-            System.out.println(kood);
-            System.out.println(inventar.getTehnika(kood));
-        }
+        //Using the readObject() method
+        return (Inventar) objStream.readObject();
 
     }
+
+    static void salvestaObjektFaili(Object o, String failinimi) throws IOException {
+        FileOutputStream file = null;
+        file = new FileOutputStream(failinimi);
+
+        // Creates an ObjectOutputStream
+        ObjectOutputStream output = null;
+
+        output = new ObjectOutputStream(file);
+
+        // writes objects to output stream
+
+        output.writeObject(o);
+
+    }
+
 }

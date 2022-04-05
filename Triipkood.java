@@ -1,6 +1,7 @@
 import java.io.Serializable;
+import java.util.Objects;
 
-class Triipkood implements Serializable, Comparable<Triipkood> {
+class Triipkood implements Serializable {
     private String kood;
 
     Triipkood(String triipkood) {
@@ -19,13 +20,15 @@ class Triipkood implements Serializable, Comparable<Triipkood> {
     }
 
     @Override
-    public int compareTo(Triipkood o) {
-        if (Integer.parseInt(this.kood)> Integer.parseInt(o.getKood())) {
-            return 1;
-        }
-        if (Integer.parseInt(this.kood)< Integer.parseInt(o.getKood())) {
-            return -1;
-        }
-        return 0;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triipkood triipkood = (Triipkood) o;
+        return Objects.equals(kood, triipkood.kood);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(kood);
     }
 }

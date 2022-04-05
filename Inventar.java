@@ -35,7 +35,7 @@ class Inventar implements Serializable {
 
     Tehnika getTehnika(Triipkood triipkood) {
         for (Tehnika tehnika : koguVara) {
-            if(triipkood.compareTo(tehnika.getTriipkood())==0) return tehnika;
+            if(triipkood.equals(tehnika.getTriipkood())) return tehnika;
         }
         throw new RuntimeException("Sellise koodiga tehnikat ei leitud.");
     }
