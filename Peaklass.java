@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Scanner;
 
 class Peaklass {
@@ -12,16 +14,10 @@ class Peaklass {
 
         Scanner triipkoodiLugeja = new Scanner(System.in);
         while (true) {
-            System.out.println("Loe kood: ");
-            String input = triipkoodiLugeja.nextLine();
+            kontrolliTehnikaAjalugu(triipkoodiLugeja, inventar);
 
-            if (input.equals("")) {
-                salvestaObjektFaili(inventar, "file.txt");
-                return;
-            }
+            teostaLaenutus(triipkoodiLugeja, inventar);
 
-            Triipkood kood = new Triipkood(input);
-            System.out.println(inventar.getTehnika(kood));
         }
 
         /*KUI MÜNDA KLASSI MUUTA SIIS PEAB UUESTI JOOKSUTAMA VÄLJAKOMMENTEERITUD OSA!!!!!!!!!!!!!*/
@@ -111,4 +107,39 @@ class Peaklass {
 
     }
 
+    static void teostaLaenutus(Scanner triipkoodiLugeja, Inventar inventar) throws IOException {
+        System.out.print("Sisesta nimi: ");
+            String nimi = triipkoodiLugeja.nextLine();
+            String[] nimed = nimi.split(" ");
+            Laenutaja laenutaja = new Laenutaja(nimed[0], nimed[1], "50207232759");
+
+
+            System.out.print("Loe kood: ");
+            String kood = triipkoodiLugeja.nextLine();
+
+            if (kood.equals("")) {
+                salvestaObjektFaili(inventar, "file.txt");
+                return;
+            }
+
+            Triipkood triipkood = new Triipkood(kood);
+            Tehnika tehnika = inventar.getTehnika(triipkood);
+
+            System.out.println("Sisesta lõppkuupäev: ");
+            String[] kuupäev = triipkoodiLugeja.nextLine().split("/");
+
+            LocalDate dateLaenutus = LocalDate.of(Integer.parseInt(kuupäev[2]), Integer.parseInt(kuupäev[1]), Integer.parseInt(kuupäev[0]));
+            Laenutus uusLaenutus = new Laenutus(laenutaja, tehnika, LocalDate.now(), dateLaenutus);
+            laenutaja.lisaLaenutus(uusLaenutus);
+            tehnika.lisaLaenutus(uusLaenutus);
+
+    }
+
+    static void kontrolliTehnikaAjalugu(Scanner triipkoodiLugeja, Inventar inventar) {
+        System.out.println("Sisesta kood: ");
+        Triipkood kood = new Triipkood(triipkoodiLugeja.nextLine());
+        Tehnika tehnika = inventar.getTehnika(kood);
+
+        System.out.println(tehnika.getAjalugu());
+    }
 }

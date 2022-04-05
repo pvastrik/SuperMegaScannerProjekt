@@ -10,7 +10,7 @@ class Triipkood implements Serializable {
         this.kood = triipkood;
     }
 
-    public String getKood() {
+    String getKood() {
         return kood;
     }
 

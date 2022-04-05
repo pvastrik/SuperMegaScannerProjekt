@@ -1,43 +1,60 @@
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 
-class Laenutus {
+class Laenutus implements Serializable {
     private Laenutaja laenutaja;
-    private Date algus;
-    private Date lopp;
-    private Date lopetatud;
+    private Tehnika tehnika;
+    private LocalDate algus;
+    private LocalDate lopp;
+    private LocalDate lopetatud;
     private String markused;
 
-    public Laenutus(Laenutaja laenutaja, Date algus, Date lopp) {
+    Laenutus(Laenutaja laenutaja, Tehnika tehnika, LocalDate algus, LocalDate lopp) {
         this.laenutaja = laenutaja;
+        this.tehnika = tehnika;
         this.algus = algus;
         this.lopp = lopp;
     }
 
-    public Laenutaja getLaenutaja() {
+    Laenutaja getLaenutaja() {
         return laenutaja;
     }
 
-    public Date getAlgus() {
+    Tehnika getTehnika() {
+        return tehnika;
+    }
+
+    LocalDate getAlgus() {
         return algus;
     }
 
-    public Date getLopp() {
+    LocalDate getLopp() {
         return lopp;
     }
 
-    public Date getLopetatud() {
+    LocalDate getLopetatud() {
         return lopetatud;
     }
 
-    public String getMarkused() {
+    String getMarkused() {
         return markused;
     }
 
-    public void setLopetatud(Date lopetatud) {
+    void setLopetatud(LocalDate lopetatud) {
         this.lopetatud = lopetatud;
     }
 
-    public void setMarkused(String markused) {
+    void setMarkused(String markused) {
         this.markused = markused;
+    }
+
+    @Override
+    public String toString() {
+        return "Laenutus{" +
+                "laenutaja=" + laenutaja +
+                ", tehnika=" + tehnika +
+                ", algus=" + algus.toString() +
+                ", lopp=" + lopp.toString() +
+                '}';
     }
 }

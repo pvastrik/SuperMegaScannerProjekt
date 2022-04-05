@@ -17,6 +17,14 @@ class Tehnika implements Serializable {
         return triipkood;
     }
 
+    List<Laenutus> getAjalugu() {
+        return ajalugu;
+    }
+
+    void lisaLaenutus(Laenutus laenutus) {
+        ajalugu.add(laenutus);
+    }
+
     @Override
     public String toString() {
         return "Tehnika{" +

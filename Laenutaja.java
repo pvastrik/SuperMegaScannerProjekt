@@ -1,45 +1,54 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class Laenutaja {
+class Laenutaja implements Serializable {
     private String eesnimi;
     private String perenimi;
     private String isikukood;
     private String email;
     private List<Laenutus> laenutused = new ArrayList<>();
 
-    public Laenutaja(String eesnimi, String perenimi, String isikukood, String email) {
+    Laenutaja(String eesnimi, String perenimi, String isikukood) {
         this.eesnimi = eesnimi;
         this.perenimi = perenimi;
         this.isikukood = isikukood;
-        this.email = email;
     }
 
-    public void lisaLaenutus(Laenutus laenutus) {
+    void lisaLaenutus(Laenutus laenutus) {
         laenutused.add(laenutus);
     }
 
-    public String getEesnimi() {
+    String getEesnimi() {
         return eesnimi;
     }
 
-    public String getPerenimi() {
+    String getPerenimi() {
         return perenimi;
     }
 
-    public String getIsikukood() {
+    String getIsikukood() {
         return isikukood;
     }
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
-    public List<Laenutus> getLaenutused() {
+    List<Laenutus> getLaenutused() {
         return laenutused;
     }
 
-    public void setEmail(String email) {
+    void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Laenutaja{" +
+                "eesnimi='" + eesnimi + '\'' +
+                ", perenimi='" + perenimi + '\'' +
+                ", isikukood='" + isikukood + '\'' +
+                '}';
     }
 }
