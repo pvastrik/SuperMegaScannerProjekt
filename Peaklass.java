@@ -81,11 +81,11 @@ class Peaklass {
 
     static Inventar loeInventarTXT(String failinimi) throws IOException, ClassNotFoundException {
         FileInputStream fileStream = null;
-            fileStream = new FileInputStream(failinimi);
+        fileStream = new FileInputStream(failinimi);
 
         // Creating an object input stream
         ObjectInputStream objStream = null;
-            objStream = new ObjectInputStream(fileStream);
+        objStream = new ObjectInputStream(fileStream);
 
         //Using the readObject() method
         return (Inventar) objStream.readObject();
@@ -108,31 +108,44 @@ class Peaklass {
     }
 
     static void teostaLaenutus(Scanner triipkoodiLugeja, Inventar inventar) throws IOException {
-        System.out.print("Sisesta nimi: ");
-            String nimi = triipkoodiLugeja.nextLine();
-            String[] nimed = nimi.split(" ");
-            Laenutaja laenutaja = new Laenutaja(nimed[0], nimed[1], "50207232759");
+        System.out.print("Sisesta eesnimi, perenimi, isikukood: ");
+        String input = triipkoodiLugeja.nextLine();
+        String[] andmed = input.split(", ");
+        Laenutaja laenutaja = otsiLaenutajat(andmed[2], inventar);
+
+        if (laenutaja == null) {
+            laenutaja = new Laenutaja(andmed[0], andmed[1], "50207232759");
+        }
 
 
-            System.out.print("Loe kood: ");
-            String kood = triipkoodiLugeja.nextLine();
+        System.out.print("Loe kood: ");
+        String kood = triipkoodiLugeja.nextLine();
 
-            if (kood.equals("")) {
-                salvestaObjektFaili(inventar, "file.txt");
-                return;
+        if (kood.equals("")) {
+            salvestaObjektFaili(inventar, "file.txt");
+            return;
+        }
+
+        Triipkood triipkood = new Triipkood(kood);
+        Tehnika tehnika = inventar.getTehnika(triipkood);
+
+        System.out.println("Sisesta lõppkuupäev: ");
+        String[] kuupäev = triipkoodiLugeja.nextLine().split("/");
+
+        LocalDate dateLaenutus = LocalDate.of(Integer.parseInt(kuupäev[2]), Integer.parseInt(kuupäev[1]), Integer.parseInt(kuupäev[0]));
+        Laenutus uusLaenutus = new Laenutus(laenutaja, tehnika, LocalDate.now(), dateLaenutus);
+        laenutaja.lisaLaenutus(uusLaenutus);
+        tehnika.lisaLaenutus(uusLaenutus);
+
+    }
+
+    static Laenutaja otsiLaenutajat(String isikukood, Inventar inventar) {
+        for (Laenutaja l : inventar.getLaenutajad()) {
+            if (l.getIsikukood() == isikukood) {
+                return l;
             }
-
-            Triipkood triipkood = new Triipkood(kood);
-            Tehnika tehnika = inventar.getTehnika(triipkood);
-
-            System.out.println("Sisesta lõppkuupäev: ");
-            String[] kuupäev = triipkoodiLugeja.nextLine().split("/");
-
-            LocalDate dateLaenutus = LocalDate.of(Integer.parseInt(kuupäev[2]), Integer.parseInt(kuupäev[1]), Integer.parseInt(kuupäev[0]));
-            Laenutus uusLaenutus = new Laenutus(laenutaja, tehnika, LocalDate.now(), dateLaenutus);
-            laenutaja.lisaLaenutus(uusLaenutus);
-            tehnika.lisaLaenutus(uusLaenutus);
-
+        }
+        return null;
     }
 
     static void kontrolliTehnikaAjalugu(Scanner triipkoodiLugeja, Inventar inventar) {

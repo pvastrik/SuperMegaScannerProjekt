@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 class Inventar implements Serializable {
     private List<Tehnika> koguVara;
+    private List<Laenutaja> laenutajad = new ArrayList<>();
 
     Inventar(String failinimi) {
         this.koguVara = new ArrayList<>();
@@ -33,6 +34,13 @@ class Inventar implements Serializable {
         }
     }
 
+    public List<Laenutaja> getLaenutajad() {
+        return laenutajad;
+    }
+
+    void lisaLaenutaja(Laenutaja laenutaja) {
+        laenutajad.add(laenutaja);
+    }
     Tehnika getTehnika(Triipkood triipkood) {
         for (Tehnika tehnika : koguVara) {
             if(triipkood.equals(tehnika.getTriipkood())) return tehnika;
