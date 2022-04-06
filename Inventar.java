@@ -1,4 +1,5 @@
 import com.opencsv.CSVReader;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorkbookDocument;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 class Inventar implements Serializable {
     private List<Tehnika> koguVara;
     private List<Laenutaja> laenutajad = new ArrayList<>();
+
 
     Inventar(String failinimi) {
         this.koguVara = new ArrayList<>();

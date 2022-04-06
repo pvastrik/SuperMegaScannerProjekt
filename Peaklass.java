@@ -1,3 +1,5 @@
+import com.opencsv.CSVWriter;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -8,7 +10,7 @@ class Peaklass {
 
 
         //KUI UUENDADA KLASSE VÕI INVENTARI FAILI, SIIS PEAB SELLE UUESTI TEGEMA
-        //Inventar inventar = loeInventarCSV("inventar.csv");
+        //Inventar inventar = loeInventarCSV("G:\\Shared drives\\LTAT - ati.comp\\inventar.csv");
 
         Inventar inventar = loeInventarTXT("file.txt");
 
@@ -76,7 +78,7 @@ class Peaklass {
     }
 
     static Inventar loeInventarCSV(String failinimi) {
-        return new Inventar("inventar.csv");
+        return new Inventar(failinimi);
     }
 
     static Inventar loeInventarTXT(String failinimi) throws IOException, ClassNotFoundException {
@@ -114,7 +116,7 @@ class Peaklass {
         Laenutaja laenutaja = otsiLaenutajat(andmed[2], inventar);
 
         if (laenutaja == null) {
-            laenutaja = new Laenutaja(andmed[0], andmed[1], "50207232759");
+            laenutaja = new Laenutaja(andmed[0], andmed[1], andmed[2]);
         }
 
 
@@ -132,10 +134,11 @@ class Peaklass {
         System.out.println("Sisesta lõppkuupäev: ");
         String[] kuupäev = triipkoodiLugeja.nextLine().split("/");
 
-        LocalDate dateLaenutus = LocalDate.of(Integer.parseInt(kuupäev[2]), Integer.parseInt(kuupäev[1]), Integer.parseInt(kuupäev[0]));
-        Laenutus uusLaenutus = new Laenutus(laenutaja, tehnika, LocalDate.now(), dateLaenutus);
-        laenutaja.lisaLaenutus(uusLaenutus);
-        tehnika.lisaLaenutus(uusLaenutus);
+            LocalDate dateLaenutus = LocalDate.of(Integer.parseInt(kuupäev[2]), Integer.parseInt(kuupäev[1]), Integer.parseInt(kuupäev[0]));
+            Laenutus uusLaenutus = new Laenutus(laenutaja, tehnika, LocalDate.now(), dateLaenutus);
+            laenutaja.lisaLaenutus(uusLaenutus);
+            tehnika.lisaLaenutus(uusLaenutus);
+            kirjutaLaenutusFaili(uusLaenutus, "laenutused.csv");
 
     }
 
@@ -154,5 +157,34 @@ class Peaklass {
         Tehnika tehnika = inventar.getTehnika(kood);
 
         System.out.println(tehnika.getAjalugu());
+
+        System.out.println("Sisesta laenutaja, kelle andmeid tahad (isikukood): ");
+        String isikukood = triipkoodiLugeja.nextLine();
+        Laenutaja laenutaja = otsiLaenutajat(isikukood, inventar);
+        if(laenutaja==null) return; //throw new RuntimeException("Sellist laenutajat pole.");
+        else {
+            System.out.println(laenutaja.getLaenutused());
+        }
+    }
+
+    static void kirjutaLaenutusFaili(Laenutus laenutus, String failinimi) throws IOException {
+        File file = new File(failinimi);
+        try {
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file, true);
+
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+
+            // add data to csv
+            Laenutaja laenutaja = laenutus.getLaenutaja();
+            Tehnika tehnika = laenutus.getTehnika();
+            String[] data1 = {tehnika.getKirjeldus(), laenutaja.getEesnimi() + " " + laenutaja.getPerenimi(), laenutus.getAlgus().toString(), laenutus.getLopp().toString()};
+            writer.writeNext(data1);
+            writer.close();
+        }  catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

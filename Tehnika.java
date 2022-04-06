@@ -13,6 +13,10 @@ class Tehnika implements Serializable {
         this.ajalugu = new ArrayList<>();
     }
 
+    public String getKirjeldus() {
+        return kirjeldus;
+    }
+
     Triipkood getTriipkood() {
         return triipkood;
     }
