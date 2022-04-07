@@ -1,4 +1,4 @@
-# SuperMegaScannerProjekt
+# Scanneri projekt Delta tehnikalaenutusele
 OOP projekt
 Mihkel Tiks, Priidik Meelo Västrik
 
@@ -8,7 +8,7 @@ kõik Delta hoone tehnika seast laenutatud esemed; kes, millal ja kui pikaks aja
   2. loeb isikuinfo ja kontrollib kas antud isik eksisteerib ("nimi, perenimi, isikukood)
   3. kui eksisteerib siis salvestab eseme vastavale isikule laenutatuks, muidu loob uue isiku ja salvestab selle talle
 Projekt 2-ks on plaanis vahetada välja 2. sammu manuaalne sisestud lugejaga ülikooli töötajate kiipide jaoks. Teostatud salvestused ja inventar on Google Drive'is
-exceli failis, milles olev info käivitusel programmi loetakse ja mida jooksvalt täiendatakase.
+exceli failis, et oleks võimalik teistest ligi pääseda ja mugavalt andmeid muuta. Excelis olev info loetakse käivitusel programmi ja programmi täiendatakase jooksvalt.
 
 Inventar - siia on salvestatud kogu tehnika ja laenutajate kirjeldused(looInventarFailist(), getLaenutajad(), lisaLaenutaja(), getTehnika()).
 Laenutaja - kõik laenutajad on seda tüüpi, sisaldab andmeid ja isiku laenutusi(getLaenutused(), getIsikukood()).
@@ -26,8 +26,8 @@ Priidik tegeles rohkesti Drivest Excelist lugemise ja kirjutamisega ja selle tö
 Projekt valmis valdavalt viimase nädala jooksul suhteliselt võrdse panusega meetodite, klasside ja struktuuri planeerimise osas. Andmete kirjutamine/ lugemine on
 ülekaalukalt Priidiku töö tulemus, see ReadMe aga Mihkli oma.
 
-Kõige keerulisem ja aeganõudvam oli väliste libraryte kasutamise ülesseadmine. Ei teadnud mavenist/gradlest enne, otsisime jar faile netist, väga tülikas. Lõpuks saime 
-aru, kuidas gradle töötab, teise osa teeme gradle projekti.
+Kõige keerulisem ja aeganõudvam oli väliste libraryte kasutamise ülesseadmine. Mavenist/ Gradlest teadmata otsisime alguses jar faile netist, mis oli väga tülikas. Lõpuks saime aru, kuidas Gradle töötab, seega teise osa teeme gradle projekti.
 
-hinnang oma töö lõpptulemusele (millega saite hästi hakkama ja mis vajab arendamist);
-selgitus ja/või näited, kuidas programmi osi eraldi ja programmi tervikuna testisite ehk kuidas veendusite, et programm töötab korrektselt.
+Programm töötab juba praegu tegelikult kasulikul kujul ja hetkel selle projekti raames soovitud funktsionaalsus on saavutatud, kuid selleks et ta oleks päriselt mugav ja säästaks praeguse süsteemiga võrreldes piisavalt aega oleks veel vaja kasutajaliidest ja kiibiskännerit, mille realiseerime tõenäoliselt teise projekti jooksul.
+
+Proovisime laenutada esemeid, mille olime inventari loonud ja tegime seda uute ning ka eksisteerivate isikutega. Kontrollisime kas programm salvestab sooritud andmed ja kas salvestused on korrektsed.
